@@ -1,7 +1,7 @@
 import express from 'express'
-import { postAdmin  } from '../controllers/authControllers.js';
+//import { postAdmin  } from '../controllers/authControllers.js';
 import { deleteProject, getProject, getProjectById, postProject, updateProject} from '../controllers/ProjectControllers.js';
-import express from 'express';
+
 import { postAdmin, postForgot } from '../controllers/authControllers.js';
 import { postClient, getClient, getClientById, updateClient, deleteClient } from '../controllers/clientControllers.js';
 import { postLeads, getLeads, updateLeads, deleteLeads, getLeadsById } from '../controllers/leadsControllers.js';
