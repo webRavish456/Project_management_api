@@ -71,6 +71,16 @@ export const postForgot = async (req, res) => {
       if (password !== confirmpassword) {
         return res.status(400).json({ status: "error", message: "Password do not match" });
       }
+      const { email, password, confirmPassword} = req.body;
+
+      if (!email || !password ||!confirmPassword) {
+        return res.status(400).json({ status: "error", message: "All fields are required" });
+      }
+      
+      if (password !== confirmPassword) {
+        return res.status(400).json({ status: "error", message: "confirm passward do not match" });
+      }
+      
       try {
         const existingAdmin = await AdminModel.findOne({ email });
 
@@ -85,6 +95,13 @@ export const postForgot = async (req, res) => {
         );
 
         res.status(200).json({ status: "success", message: "Password update Successfully!" });
+        const hashedPassword= await bcrypt.hash(password,10);
+       await AdminModel.updateOne({email},{$set:{password:hashedPassword}}) ;
+
+      
+       
+
+        res.status(200).json({ status: "success", message: "Passward Upadate Successfully!" });
 
       } catch (error) {
         console.log("Error during login:", error);
@@ -93,4 +110,5 @@ export const postForgot = async (req, res) => {
     });
 
   } 
+};
 };
