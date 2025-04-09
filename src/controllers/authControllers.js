@@ -63,15 +63,16 @@ export const postForgot = async (req, res) => {
         return res.status(500).json({ status: "error", msg: "Error handling form data" });
       }
 
-      const { email, password, confirmpassword } = req.body;
+      const { email, password, confirmPassword} = req.body;
 
-      if (!email || !password || !confirmpassword) {
-        return res.status(400).json({ status: "error", message: "Email and Password are required" });
+      if (!email || !password ||!confirmPassword) {
+        return res.status(400).json({ status: "error", message: "All fields are required" });
       }
-      if (password !== confirmpassword) {
-        return res.status(400).json({ status: "error", message: "Password do not match" });
+      
+      if (password !== confirmPassword) {
+        return res.status(400).json({ status: "error", message: "confirm passward do not match" });
       }
-
+      
       try {
         const existingAdmin = await AdminModel.findOne({ email });
 
@@ -95,4 +96,3 @@ export const postForgot = async (req, res) => {
 
   }
 };
-
