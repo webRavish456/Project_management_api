@@ -2,11 +2,11 @@ import express from 'express'
 //import { postAdmin  } from '../controllers/authControllers.js';
 import { deleteProject, getProject, getProjectById, postProject, updateProject} from '../controllers/ProjectControllers.js';
 
-import { postAdmin, postForgot } from '../controllers/authControllers.js';
+import { postAdmin} from '../controllers/authControllers.js';
 import { deleteFinance, getFinance, getFinanceById, postFinance, updateFinance } from '../controllers/financeControllers.js';
 import { postClient, getClient, getClientById, updateClient, deleteClient } from '../controllers/clientControllers.js';
 import { postLeads, getLeads, updateLeads, deleteLeads, getLeadsById } from '../controllers/leadsControllers.js';
- import { get } from 'mongoose';
+import { get } from 'mongoose';
 import { deletedMeetingSchedule, getMeetingScheduleById, getMeetingSchedule, postMeetingSchedule, updatedMeetingSchedule} from '../controllers/meetingScheduledControllers.js';
 
 
@@ -21,7 +21,7 @@ router.route('/project').get(getProject)
 router.route('/project/:id').get(getProjectById)
 router.route('/project/:id').patch(updateProject)
 router.route('/project/:id').delete(deleteProject)
-router.route('/forgot').post(postForgot);
+//router.route('/forgot').post(postForgot);
 
 router.route('/finance').post(postFinance)
 router.route('/finance').get(getFinance)
