@@ -63,14 +63,6 @@ export const postForgot = async (req, res) => {
         return res.status(500).json({ status: "error", msg: "Error handling form data" });
       }
 
-      const { email, password ,confirmpassword} = req.body;
-
-      if (!email || !password || !confirmpassword) {
-        return res.status(400).json({ status: "error", message: "All Fields are required" });
-      }
-      if (password !== confirmpassword) {
-        return res.status(400).json({ status: "error", message: "Password do not match" });
-      }
       const { email, password, confirmPassword} = req.body;
 
       if (!email || !password ||!confirmPassword) {
@@ -94,14 +86,7 @@ export const postForgot = async (req, res) => {
           { $set: { password: hashedPassword } }
         );
 
-        res.status(200).json({ status: "success", message: "Password update Successfully!" });
-        const hashedPassword= await bcrypt.hash(password,10);
-       await AdminModel.updateOne({email},{$set:{password:hashedPassword}}) ;
-
-      
-       
-
-        res.status(200).json({ status: "success", message: "Passward Upadate Successfully!" });
+        res.status(200).json({ status: "success", message: "Password Reset Successfully!" });
 
       } catch (error) {
         console.log("Error during login:", error);
@@ -109,6 +94,5 @@ export const postForgot = async (req, res) => {
       }
     });
 
-  } 
-};
+  }
 };
