@@ -28,19 +28,18 @@ router.route('/finance').get(getFinance)
 router.route('/finance/:id').get(getFinanceById)
 router.route('/finance/:id').patch(updateFinance)
 router.route('/finance/:id').delete(deleteFinance)
+
 router.route('/client').post(postClient);
 router.route('/client').get(getClient);
 router.route('/client/:id').get(getClientById);
 router.route('/client/:id').patch(updateClient);
 router.route('/client/:id').delete(deleteClient);
 
-
 router.route('/leads').post(postLeads);
 router.route('/leads').get(getLeads);
  router.route('/leads/:id').get(getLeadsById);
  router.route('/leads/:id').patch(updateLeads);
 router.route('/leads/:id').delete(deleteLeads);
-
 
 router.route('/meetingSchedule').post(postMeetingSchedule);
 router.route('/meetingSchedule').get(getMeetingSchedule);
