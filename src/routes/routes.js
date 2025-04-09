@@ -38,6 +38,7 @@ router.route('/finance').get(getFinance)
 router.route('/finance/:id').get(getFinanceById)
 router.route('/finance/:id').patch(updateFinance)
 router.route('/finance/:id').delete(deleteFinance)
+
 router.route('/client').post(postClient);
 router.route('/client').get(getClient);
 router.route('/client/:id').get(getClientById);
