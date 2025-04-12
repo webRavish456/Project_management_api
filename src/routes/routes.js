@@ -31,13 +31,16 @@ router.route('/project').get(getProject)
 router.route('/project/:id').get(getProjectById)
 router.route('/project/:id').patch(updateProject)
 router.route('/project/:id').delete(deleteProject)
-router.route('/forgot').post(postForgot);
+// router.route('/forgot').post(postForgot);
+
 
 router.route('/finance').post(postFinance)
 router.route('/finance').get(getFinance)
 router.route('/finance/:id').get(getFinanceById)
 router.route('/finance/:id').patch(updateFinance)
 router.route('/finance/:id').delete(deleteFinance)
+
+
 router.route('/client').post(postClient);
 router.route('/client').get(getClient);
 router.route('/client/:id').get(getClientById);
