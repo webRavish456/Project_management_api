@@ -41,6 +41,7 @@ router.route('/finance').get(verifyToken, getFinance)
 router.route('/finance/:id').get(verifyToken, getFinanceById)
 router.route('/finance/:id').patch(verifyToken, updateFinance)
 router.route('/finance/:id').delete(verifyToken, deleteFinance)
+
 router.route('/client').post(verifyToken, postClient);
 router.route('/client').get(verifyToken, getClient);
 router.route('/client/:id').get(verifyToken, getClientById);

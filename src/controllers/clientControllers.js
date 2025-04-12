@@ -19,12 +19,12 @@ export const postClient = async (req, res) => {
     try {
   
       const { name,email, mobileNo, address, companyName} = req.body;
-      console.log(req.body)
-      if (!name || !email || !mobileNo || !address || !companyName) {
+      // console.log(req.body)
+      if (!name || !email || !mobileNo || !address || !companyName ) {
         return res.status(400).json({ status: "error", message: "All fields are required" });
       }
   
-      const newClient = await ClientModel.create({ name,email, mobileNo, address, companyName });
+      const newClient = await ClientModel.create({ name,email, mobileNo, address, companyName});
 
       res.status(200).json({ status: "success", message: "Client created successfully!" });
   
@@ -44,7 +44,7 @@ export const postClient = async (req, res) => {
     try {
       const client = await ClientModel.find();
   
-      if (client.length === 0) {
+      if (!client) {
         return res.status(404).json({ status: "error", message: "Client not found" });
       }
   
