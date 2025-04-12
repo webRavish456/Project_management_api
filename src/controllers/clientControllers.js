@@ -38,6 +38,7 @@ export const postClient = async (req, res) => {
   
   };
 
+  
 
   export const getClient = async (req, res) => {
     try {
@@ -53,6 +54,7 @@ export const postClient = async (req, res) => {
       res.status(500).json({ status: "error", message: "Internal server error" });
     }
   };
+
 
 
 export const getClientById = async (req, res) => {
@@ -71,6 +73,7 @@ export const getClientById = async (req, res) => {
       res.status(500).json({ status: "error", message: "Internal server error" });
     }
   };
+
 
 
   export const updateClient = async (req, res) => {
@@ -103,6 +106,7 @@ export const getClientById = async (req, res) => {
   };
 
   
+
   export const deleteClient = async (req, res) => {
     try {
       const { id } = req.params;
