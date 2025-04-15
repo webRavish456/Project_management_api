@@ -12,13 +12,13 @@ const clientSchema = new mongoose.Schema(
         email: { 
           type: String, 
           required: true,
-          unique: true 
+           unique: true 
         },
         
         mobileNo: { 
           type: Number, 
           required: true ,
-          unique: true 
+           unique: true 
         },
         
         address: { 
@@ -30,6 +30,7 @@ const clientSchema = new mongoose.Schema(
           type: String, 
           required: true 
         },
+
     },
 
     { timestamps: true }, 

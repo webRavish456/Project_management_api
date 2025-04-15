@@ -1,15 +1,16 @@
 import express from 'express'
 //import { postAdmin, postForgot } from '../controllers/authControllers.js';
+//import { deleteTask, getTask, getTaskById, postTask, updateTask } from '../controllers/taskControllers.js';
+
+import { postAdmin  } from '../controllers/authControllers.js';
+import { deleteProject, getProject, getProjectById, postProject, updateProject} from '../controllers/ProjectControllers.js';
 import { deleteTask, getTask, getTaskById, postTask, updateTask } from '../controllers/taskControllers.js';
 
-//import { postAdmin  } from '../controllers/authControllers.js';
-import { deleteProject, getProject, getProjectById, postProject, updateProject} from '../controllers/ProjectControllers.js';
-
-import { postAdmin, postForgot } from '../controllers/authControllers.js';
+//import { postAdmin} from '../controllers/authControllers.js';
 import { deleteFinance, getFinance, getFinanceById, postFinance, updateFinance } from '../controllers/financeControllers.js';
 import { postClient, getClient, getClientById, updateClient, deleteClient } from '../controllers/clientControllers.js';
 import { postLeads, getLeads, updateLeads, deleteLeads, getLeadsById } from '../controllers/leadsControllers.js';
- import { get } from 'mongoose';
+import { get } from 'mongoose';
 import { deletedMeetingSchedule, getMeetingScheduleById, getMeetingSchedule, postMeetingSchedule, updatedMeetingSchedule} from '../controllers/meetingScheduledControllers.js';
 import verifyToken from '../middleware/auth.js';
 
@@ -17,7 +18,7 @@ import verifyToken from '../middleware/auth.js';
 export const router = express.Router();
 
 router.route('/login').post(postAdmin);
-router.route('/forgot').post(postForgot);
+//router.route('/forgot').post(postForgot);
 
  router.route('/task').post(verifyToken, postTask);
  router.route('/task').get(verifyToken, getTask);
@@ -33,13 +34,14 @@ router.route('/project').get(verifyToken, getProject)
 router.route('/project/:id').get(verifyToken, getProjectById)
 router.route('/project/:id').patch(verifyToken, updateProject)
 router.route('/project/:id').delete(verifyToken, deleteProject)
-router.route('/forgot').post(verifyToken, postForgot);
+
 
 router.route('/finance').post(verifyToken, postFinance)
 router.route('/finance').get(verifyToken, getFinance)
 router.route('/finance/:id').get(verifyToken, getFinanceById)
 router.route('/finance/:id').patch(verifyToken, updateFinance)
 router.route('/finance/:id').delete(verifyToken, deleteFinance)
+
 router.route('/client').post(verifyToken, postClient);
 router.route('/client').get(verifyToken, getClient);
 router.route('/client/:id').get(verifyToken, getClientById);
