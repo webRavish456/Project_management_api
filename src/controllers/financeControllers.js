@@ -24,17 +24,7 @@ export const postFinance = async (req, res) => {
       if (!name || !amount || !TransactionType || !Category || !PaymentMode || !TransactionDate || !Status) {
         return res.status(400).json({ status: "error", message: "All fields are required" });
       }
-  
-   
-      // // const existingfinance = await financeModel.findOne({
-      // //   $or: [{name}, {amount}]
-      // // });
-      
-      // if (existingfinance) {
-      //   if (existingfinance.name === name) {
-      //     return res.status(400).json({ status: "error", message: "Finance  Name already exists" });
-      //   }
-      // }
+
       
       const newname = await financeModel.create({name,amount,TransactionType,Category,PaymentMode,TransactionDate,Status});
 
@@ -72,7 +62,8 @@ export const getFinanceById = async (req, res) => {
       const { id } = req.params; 
 
       const finance = await financeModel.findById(id); 
-  
+         console.log(id);
+         console.log(finance)
       if (!finance) {
         return res.status(404).json({ status: "error", message: "Finance not found" });
       }

@@ -75,13 +75,13 @@ export const postForgot = async (req, res) => {
         return res.status(500).json({ status: "error", msg: "Error handling form data" });
       }
 
-      const { email, password, confirmPassword} = req.body;
+      const { email, password, confirmpassword} = req.body;
 
-      if (!email || !password ||!confirmPassword) {
+      if (!email || !password ||!confirmpassword) {
         return res.status(400).json({ status: "error", message: "All fields are required" });
       }
       
-      if (password !== confirmPassword) {
+      if (password !== confirmpassword) {
         return res.status(400).json({ status: "error", message: "confirm passward do not match" });
       }
       
