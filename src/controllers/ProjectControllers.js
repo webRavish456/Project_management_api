@@ -27,18 +27,18 @@ export const postProject = async (req, res) => {
       }
   
    
-      const existingProject = await ProjectModel.findOne({
-        $or: [{ ProjectName }, { ProjectDescription}]
-      });
+      // const existingProject = await ProjectModel.findOne({
+      //   $or: [{ ProjectName }, { ProjectDescription}]
+      // });
       
-      if (existingProject) {
-        if (existingProject.ProjectName === ProjectName) {
-          return res.status(400).json({ status: "error", message: "Project Name already exists" });
-        }
-        if (existingProject.ProjectDescription === ProjectDescription) {
-          return res.status(400).json({ status: "error", message: "ProjectDescription already exists" });
-        }
-      }
+      // if (existingProject) {
+      //   if (existingProject.ProjectName === ProjectName) {
+      //     return res.status(400).json({ status: "error", message: "Project Name already exists" });
+      //   }
+      //   if (existingProject.ProjectDescription === ProjectDescription) {
+      //     return res.status(400).json({ status: "error", message: "ProjectDescription already exists" });
+      //   }
+      // }
 
       
 
