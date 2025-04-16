@@ -82,7 +82,7 @@ export const postForgot = async (req, res) => {
       }
       
       if (password !== confirmpassword) {
-        return res.status(400).json({ status: "error", message: "confirm passward do not match" });
+        return res.status(400).json({ status: "error", message: "confirm passward did not match" });
       }
       
       try {

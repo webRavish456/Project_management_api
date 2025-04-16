@@ -1,8 +1,8 @@
 import express from 'express'
-//import { postAdmin, postForgot } from '../controllers/authControllers.js';
+import { postAdmin, postForgot } from '../controllers/authControllers.js';
 //import { deleteTask, getTask, getTaskById, postTask, updateTask } from '../controllers/taskControllers.js';
 
-import { postAdmin  } from '../controllers/authControllers.js';
+// import { postAdmin  } from '../controllers/authControllers.js';
 import { deleteProject, getProject, getProjectById, postProject, updateProject} from '../controllers/ProjectControllers.js';
 import { deleteTask, getTask, getTaskById, postTask, updateTask } from '../controllers/taskControllers.js';
 
@@ -18,7 +18,7 @@ import verifyToken from '../middleware/auth.js';
 export const router = express.Router();
 
 router.route('/login').post(postAdmin);
-//router.route('/forgot').post(postForgot);
+router.route('/forgot').post(postForgot);
 
  router.route('/task').post(verifyToken, postTask);
  router.route('/task').get(verifyToken, getTask);
