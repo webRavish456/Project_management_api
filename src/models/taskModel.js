@@ -15,13 +15,13 @@ const taskSchema = new mongoose.Schema(
           required: true 
         },
         taskStartDate: { 
-          type: String, 
+          type: Date, 
           required: true, 
            
         },
 
         taskEndDate: { 
-          type: String, 
+          type: Date, 
           required: true, 
         },
         taskPriority: { 
