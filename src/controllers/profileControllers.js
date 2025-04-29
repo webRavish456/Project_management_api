@@ -28,6 +28,20 @@ export const postProfile = async (req, res) => {
     
         const profilePhoto = req.imageUrls?.image;
 
+        const existingData = await profileModel.findOne({
+          $or: [{ mobileNumber }, { email }]
+        });
+        
+  
+        if (existingData) {
+          if (existingData.email === email) {
+            return res.status(400).json({ status: "error", message: " Email Id already exists" });
+          }
+          if (existingData.mobileNumber == mobileNumber) {
+            return res.status(400).json({ status: "error", message: "Mobile Number already exists" });
+          }
+        }
+
         const user = await AdminModel.create({email, password:hashedPassword});
 
         const profile = await profileModel.create({name,email,mobileNo,address,dob,gender,password:hashedPassword, profilePhoto});
