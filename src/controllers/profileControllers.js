@@ -29,7 +29,7 @@ export const postProfile = async (req, res) => {
         const profilePhoto = req.imageUrls?.image;
 
         const existingData = await profileModel.findOne({
-          $or: [{ mobileNumber }, { email }]
+          $or: [{ mobileNo }, { email }]
         });
         
   
@@ -37,7 +37,7 @@ export const postProfile = async (req, res) => {
           if (existingData.email === email) {
             return res.status(400).json({ status: "error", message: " Email Id already exists" });
           }
-          if (existingData.mobileNumber == mobileNumber) {
+          if (existingData.mobileNo == mobileNo) {
             return res.status(400).json({ status: "error", message: "Mobile Number already exists" });
           }
         }
