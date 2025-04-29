@@ -1,6 +1,8 @@
 import multer from "multer";
-
+import bcrypt from "bcryptjs";
 import profileModel from "../models/profileModel.js";
+import AdminModel from "../models/adminModel.js";
+import jwt from "jsonwebtoken";
 
 const storage = multer.memoryStorage();
 
@@ -9,70 +11,87 @@ const upload = multer({ storage: storage });
 /* ---------------------------create profile-----------------------------------*/
 
 export const postProfile = async (req, res) => {
+     
+  const ContentType = req.headers["content-type"];
+     
+  if (ContentType && ContentType.includes("multipart/form-data"))  {
 
-    const ContentType = req.headers["content-type"];
+      try {
   
-    if (ContentType && ContentType.includes("multipart/form-data")) {
+      const {name, email, mobileNo, address, dob, gender, password} = req.body;
+
+      const hashedPassword = await bcrypt.hash(password, 10);
   
-      upload.none()(req, res, async (err) => {
-        if (err) {
-          return res.status(500).json({ status: "error", msg: "Error handling form data" });
-        }
-  
-    try {
-  
-      const {name,email,contact,address,dob,gender,password} = req.body;
-  
-      if (!name || !email || !contact || !address || !dob || !gender || !password) {
+      if (!name || !email || !mobileNo || !address || !dob || !gender || !password || !req.imageUrls?.image) {
         return res.status(400).json({ status: "error", message: "All fields are required" });
       }
+    
+        const profilePhoto = req.imageUrls?.image;
 
-      
-      const newname = await profileModel.create({name,email,contact,address,dob,gender,password});
+        const user = await AdminModel.create({email, password:hashedPassword});
 
-      res.status(200).json({ status: "success", message: "Profile created successfully!" });
+        const profile = await profileModel.create({name,email,mobileNo,address,dob,gender,password:hashedPassword, profilePhoto});
+
+      res.status(200).json({ 
+        status: "success", 
+        message: "Profile created successfully!", 
+        id: profile._id 
+      });
   
     } catch (error) {
       console.error("Error creating profile:", error);
       res.status(500).json({ status: "error", message: "Internal server error" });
-    }
-    }
-    
-  )}
-  
+    }  
+  }
   };
 
 /*--------------------------------view profile---------------------------------------*/
   export const getProfile = async (req, res) => {
+
     try {
-      const profiles = await profileModel.find();
-  
-      if (!profiles) {
+ 
+      const id = req.params.id;
+      const token = req.headers.authorization?.split(" ")[1];
+      
+      const profile = id 
+        ? await profileModel.findById(id) 
+        : await profileModel.findOne({ email: jwt.verify(token, process.env.JWT_SECRET).email });
+      
+      if (!profile) {
         return res.status(404).json({ status: "error", message: "Profile not found" });
       }
-  
-      res.status(200).json({ status: "success", data: profiles });
-    } catch (error) {
+      
+      res.status(200).json({ status: "success", data: profile });
+      
+    } 
+
+    catch (error) {
       console.error("Error fetching profile:", error);
       res.status(500).json({ status: "error", message: "Internal server error" });
     }
+
   };
 
 /*-----------------------------Edit Profile------------------------------------------------------*/
 
 export const updateProfile = async (req, res) => {
-
+    
     const ContentType = req.headers["content-type"];
-  
-    if (ContentType && ContentType.includes("multipart/form-data")) {
-  
-      upload.none()(req, res, async (err) => {
-        if (err) {
-          return res.status(500).json({ status: "error", msg: "Error handling form data" });
-        }
+     
+    if (ContentType && ContentType.includes("multipart/form-data"))  {
+
     try {
       const { id } = req.params;
       const updateData = req.body; 
+
+      const token = req.headers.authorization?.split(" ")[1];
+      
+      const updateUser = await AdminModel.updateOne({email: jwt.verify(token, process.env.JWT_SECRET).email}, { $set: {email:updateData.email, password:updateData.password} });
+
+      if (req.imageUrls?.image) {
+        updateData.profilePhoto = req.imageUrls.image;
+      }
+
       const updatedProfile =  await profileModel.updateOne({ _id: id }, { $set: updateData });
   
       if (!updatedProfile) {
@@ -85,26 +104,7 @@ export const updateProfile = async (req, res) => {
       console.error("Error updating Profile:", error);
       res.status(500).json({ status: "error", message: "Internal server error" });
     }
-})
-    }
-};
-
-/*-----------------------------Delete Profile---------------------------------*/
-
-export const deleteProfile = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const deletedProfile = await profileModel.deleteOne({ _id: id });
-     
-    if (deletedProfile.deletedCount === 0) {
-      return res.status(404).json({ status: "error", message: "Profile not found" });
-    }
-
-    res.status(200).json({ status: "success", message: "Profile deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting finance:", error);
-    res.status(500).json({ status: "error", message: "Internal server error" });
   }
-  
+
 };
+

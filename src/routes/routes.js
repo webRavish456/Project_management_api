@@ -1,32 +1,29 @@
 import express from 'express'
 import { postAdmin, postForgot } from '../controllers/authControllers.js';
-//import { deleteTask, getTask, getTaskById, postTask, updateTask } from '../controllers/taskControllers.js';
 
-// import { postAdmin  } from '../controllers/authControllers.js';
 import { deleteProject, getProject, getProjectById, postProject, updateProject} from '../controllers/ProjectControllers.js';
 import { deleteTask, getTask, getTaskById, postTask, updateTask } from '../controllers/taskControllers.js';
 
-//import { postAdmin} from '../controllers/authControllers.js';
+
 import { deleteFinance, getFinance, getFinanceById, postFinance, updateFinance } from '../controllers/financeControllers.js';
 import { postClient, getClient, getClientById, updateClient, deleteClient } from '../controllers/clientControllers.js';
 import { postLeads, getLeads, updateLeads, deleteLeads, getLeadsById } from '../controllers/leadsControllers.js';
-import { get } from 'mongoose';
+
 import { deletedMeetingSchedule, getMeetingScheduleById, getMeetingSchedule, postMeetingSchedule, updatedMeetingSchedule} from '../controllers/meetingScheduledControllers.js';
 import verifyToken from '../middleware/auth.js';
-import { deleteProfile, getProfile, postProfile, updateProfile } from '../controllers/profileControllers.js';
+import { getProfile, postProfile, updateProfile } from '../controllers/profileControllers.js';
+import uploadProfile from '../upload/profile.js';
 
 
 export const router = express.Router();
 
 router.route('/login').post(postAdmin);
 router.route('/forgot').post(postForgot); 
-router.route('/profile').post(postProfile);
 
- router.route('/profile').post(verifyToken, postProfile);
- router.route('/profile').get(verifyToken, getProfile);
- router.route('/profile/:id').patch(verifyToken,updateProfile );
- router.route('/profile/:id').delete(verifyToken,deleteProfile );
 
+ router.route('/profile').post(verifyToken, uploadProfile, postProfile);
+ router.route('/profile/:id').get(verifyToken, getProfile);
+ router.route('/profile/:id').patch(verifyToken, uploadProfile, updateProfile );
 
 
  router.route('/task').post(verifyToken, postTask);

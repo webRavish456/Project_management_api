@@ -1,45 +1,47 @@
 import mongoose from "mongoose";
 
-const ProjectSchema = new mongoose.Schema(
+const ProfileSchema = new mongoose.Schema(
    
     {
-        ProjectName: { 
-          type: String, 
-          required: true, 
-          //unique: true, 
+        profilePhoto: { 
+          type: String,  
         },
 
-       
-        ProjectDescription: { 
+        name: { 
           type: String, 
           required: true 
         },
 
-        StartDate: { 
+        mobileNo: { 
+          type:Number, 
+          required: true,
+          unique:true 
+        },
+
+        email: { 
           type: String, 
+          required: true,
+          unique: true, 
+        },
+
+        dob: { 
+          type: Date, 
           required: true 
         },
 
-        EndDate: { 
-          type: String, 
-          required: true 
-        },
-
-        Priority: { 
-          type: String, 
-          required: true 
-        },
-
-        Budget: { 
-          type: Number, 
-          required: true 
-        },
-
-    
-        status: { 
+        gender: { 
             type: String, 
-            default: "active"
           },
+
+          address: { 
+            type: String, 
+            required: true 
+          },
+       
+        password: { 
+          type: String, 
+          required: true 
+        },
           
     },
 
@@ -47,6 +49,6 @@ const ProjectSchema = new mongoose.Schema(
 
 );
 
-const ProjectModel = mongoose.model('Project', ProjectSchema);
+const ProfileModel = mongoose.model('profile', ProfileSchema);
 
-export default ProjectModel
+export default ProfileModel
