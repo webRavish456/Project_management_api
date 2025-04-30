@@ -42,9 +42,10 @@ export const postProfile = async (req, res) => {
           }
         }
 
-        const user = await AdminModel.create({email, password:hashedPassword});
-
+     
         const profile = await profileModel.create({name,email,mobileNo,address,dob,gender,password:hashedPassword, profilePhoto});
+
+        const user = await AdminModel.create({email, password:hashedPassword, userId:profile._id});
 
       res.status(200).json({ 
         status: "success", 
@@ -100,28 +101,26 @@ export const updateProfile = async (req, res) => {
       
       const currentAdmin = await AdminModel.findOne({ email: updateData.email });
 
-      console.log(currentAdmin)
+      if (updateData.password) {
+        updateData.password = await bcrypt.hash(updateData.password, 10);
+      }
       
         const updateUser = await AdminModel.updateOne(
-        { email: currentAdmin.email },
+        { userId: id },
         {
           $set: {
-            ...(updateData.email && { email: updateData.email }),
-            ...(updateData.password && { password: updateData.password }),
-          },
+             email:updateData.email,
+             password:updateData.password
+          } 
+         
         }
       );
     
 
-      console.log(updateUser)
-
       if (req.imageUrls?.image) {
         updateData.profilePhoto = req.imageUrls.image;
       }
-
-      if (updateData.password) {
-        updateData.password = await bcrypt.hash(updateData.password, 10);
-      }
+  
 
       const updatedProfile =  await profileModel.updateOne({ _id: id }, { $set: updateData });
   
