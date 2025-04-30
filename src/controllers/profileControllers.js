@@ -96,14 +96,31 @@ export const updateProfile = async (req, res) => {
 
     try {
       const { id } = req.params;
-      const updateData = req.body; 
-
-      const token = req.headers.authorization?.split(" ")[1];
+      const updateData = req.body;
       
-      const updateUser = await AdminModel.updateOne({email: jwt.verify(token, process.env.JWT_SECRET).email}, { $set: {email:updateData.email, password:updateData.password} });
+      const currentAdmin = await AdminModel.findOne({ email: updateData.email });
+
+      console.log(currentAdmin)
+      
+        const updateUser = await AdminModel.updateOne(
+        { email: currentAdmin.email },
+        {
+          $set: {
+            ...(updateData.email && { email: updateData.email }),
+            ...(updateData.password && { password: updateData.password }),
+          },
+        }
+      );
+    
+
+      console.log(updateUser)
 
       if (req.imageUrls?.image) {
         updateData.profilePhoto = req.imageUrls.image;
+      }
+
+      if (updateData.password) {
+        updateData.password = await bcrypt.hash(updateData.password, 10);
       }
 
       const updatedProfile =  await profileModel.updateOne({ _id: id }, { $set: updateData });
