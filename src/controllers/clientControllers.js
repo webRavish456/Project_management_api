@@ -18,9 +18,9 @@ export const postClient = async (req, res) => {
   
     try {
   
-      const { name,email, mobileNo, address, companyName} = req.body;
+      const { name,email, mobileNo, address, companyName, status} = req.body;
    
-      if (!name || !email || !mobileNo || !address || !companyName ) {
+      if (!name || !email || !mobileNo || !address || !companyName || !status ) {
         return res.status(400).json({ status: "error", message: "All fields are required" });
       }
 
@@ -38,7 +38,7 @@ export const postClient = async (req, res) => {
           }
         }
   
-      const newClient = await ClientModel.create({ name,email, mobileNo, address, companyName});
+      const newClient = await ClientModel.create({ name,email, mobileNo, address, companyName, status});
 
       res.status(200).json({ status: "success", message: "Client created successfully!" });
   
