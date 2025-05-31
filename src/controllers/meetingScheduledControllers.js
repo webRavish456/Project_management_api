@@ -124,7 +124,7 @@ export const postMeetingSchedule = async (req, res) => {
   
       const deletedMeetingSchedule = await MeetingScheduleModel.deleteOne({ _id: id });
        
-      if (deletedMeetingSchedule.deletedCount === 0) {
+      if (!deletedMeetingSchedule) {
         return res.status(404).json({ status: "error", message: "Meeting not found" });
       }
   

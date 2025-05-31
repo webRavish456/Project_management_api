@@ -125,10 +125,10 @@ export const postLeads = async (req, res) => {
   
       const deletedLeads = await LeadsModel.deleteOne({ _id: id });
        
-      if (deletedLeads.deletedCount === 0) {
+      if (!deletedLeads) {
         return res.status(404).json({ status: "error", message: "Leads not found" });
       }
-  
+      
       res.status(200).json({ status: "success", message: "Leads deleted successfully" });
     } catch (error) {
       console.error("Error deleting Leads:", error);

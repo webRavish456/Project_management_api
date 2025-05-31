@@ -1,12 +1,7 @@
-import multer from "multer";
 import bcrypt from "bcryptjs";
 import profileModel from "../models/profileModel.js";
 import AdminModel from "../models/adminModel.js";
 import jwt from "jsonwebtoken";
-
-const storage = multer.memoryStorage();
-
-const upload = multer({ storage: storage });
 
 /* ---------------------------create profile-----------------------------------*/
 

@@ -111,11 +111,12 @@ export const getFinanceById = async (req, res) => {
       const { id } = req.params;
   
       const deletedFinance = await financeModel.deleteOne({ _id: id });
-       
-      if (deletedFinance.deletedCount === 0) {
+      
+        
+      if (!deletedFinance) {
         return res.status(404).json({ status: "error", message: "Finance not found" });
       }
-  
+
       res.status(200).json({ status: "success", message: "finance deleted successfully" });
     } catch (error) {
       console.error("Error deleting finance:", error);

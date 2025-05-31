@@ -128,11 +128,11 @@ export const getProject = async (req, res) => {
         const { id } = req.params;
     
         const deletedProject = await ProjectModel.deleteOne({ _id: id });
-         
-        if (deletedProject.deletedCount === 0) {
-          return res.status(404).json({ status: "error", message: "Project not found" });
+
+        if (!deletedProject) {
+          return res.status(404).json({ status: "error", message: "Project not found"   });
         }
-    
+        
         res.status(200).json({ status: "success", message: "Project deleted successfully" });
       } catch (error) {
         console.error("Error deleting Project:", error);

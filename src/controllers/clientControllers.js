@@ -19,10 +19,24 @@ export const postClient = async (req, res) => {
     try {
   
       const { name,email, mobileNo, address, companyName} = req.body;
-      // console.log(req.body)
+   
       if (!name || !email || !mobileNo || !address || !companyName ) {
         return res.status(400).json({ status: "error", message: "All fields are required" });
       }
+
+         const existingData = await ClientModel.findOne({
+          $or: [{ mobileNo }, { email }]
+        });
+        
+  
+        if (existingData) {
+          if (existingData.email === email) {
+            return res.status(400).json({ status: "error", message: " Email Id already exists" });
+          }
+          if (existingData.mobileNo == mobileNo) {
+            return res.status(400).json({ status: "error", message: "Mobile Number already exists" });
+          }
+        }
   
       const newClient = await ClientModel.create({ name,email, mobileNo, address, companyName});
 
@@ -112,11 +126,11 @@ export const getClientById = async (req, res) => {
       const { id } = req.params;
   
       const deletedClient = await ClientModel.deleteOne({ _id: id });
-       
-      if (deletedClient.deletedCount === 0) {
-        return res.status(404).json({ status: "error", message: "Client not found" });
+      
+      if (!deletedClient) {
+        return res.status(404).json({ status: "error", message: "Client not found"    });
       }
-  
+ 
       res.status(200).json({ status: "success", message: "Client deleted successfully" });
     } catch (error) {
       console.error("Error deleting Client:", error);

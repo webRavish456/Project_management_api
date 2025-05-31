@@ -6,7 +6,6 @@ const ProjectSchema = new mongoose.Schema(
         ProjectName: { 
           type: String, 
           required: true, 
-          //unique: true, 
         },
 
        
@@ -16,12 +15,12 @@ const ProjectSchema = new mongoose.Schema(
         },
 
         StartDate: { 
-          type: String, 
+          type: Date, 
           required: true 
         },
 
         EndDate: { 
-          type: String, 
+          type: Date, 
           required: true 
         },
 
@@ -35,14 +34,8 @@ const ProjectSchema = new mongoose.Schema(
           required: true 
         },
 
-        ProjectStatus: { 
-          type: String, 
-          required: true 
-        },
-
-        status: { 
+        Status: { 
             type: String, 
-            default: "active"
           },
           
     },
