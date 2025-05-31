@@ -60,10 +60,6 @@ export const getTask = async (req, res) => {
   try {
     const tasks = await TaskModel.find();
 
-    if (tasks.length === 0) {
-      return res.status(404).json({ status: "error", message: "Task not found" });
-    }
-
     res.status(200).json({ status: "success", data: tasks });
   } catch (error) {
     console.error("Error fetching branch:", error);
@@ -76,10 +72,6 @@ export const getTaskById = async (req, res) => {
     const { id } = req.params; 
 
     const task = await TaskModel.findById(id); 
-
-    if (!task) {
-      return res.status(404).json({ status: "error", message: "Task not found" });
-    }
 
     res.status(200).json({ status: "success", data: task });
   } catch (error) {

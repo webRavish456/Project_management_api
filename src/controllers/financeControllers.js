@@ -45,10 +45,6 @@ export const postFinance = async (req, res) => {
     try {
       const finances = await financeModel.find();
   
-      if (!finances) {
-        return res.status(404).json({ status: "error", message: "Finance Name not found" });
-      }
-  
       res.status(200).json({ status: "success", data: finances });
     } catch (error) {
       console.error("Error fetching finance:", error);
@@ -62,12 +58,7 @@ export const getFinanceById = async (req, res) => {
       const { id } = req.params; 
 
       const finance = await financeModel.findById(id); 
-         console.log(id);
-         console.log(finance)
-      if (!finance) {
-        return res.status(404).json({ status: "error", message: "Finance not found" });
-      }
-  
+
       res.status(200).json({ status: "success", data: finance });
     } catch (error) {
       console.error("Error fetching finance:", error);

@@ -62,11 +62,7 @@ export const postProject = async (req, res) => {
 export const getProject = async (req, res) => {
       try {
         const Project = await ProjectModel.find();
-    
-        if (Project.length === 0) {
-          return res.status(404).json({ status: "error", message: "Project not found" });
-        }
-    console.log("project",Project)
+
         res.status(200).json({ status: "success", data: Project });
       } catch (error) {
         console.error("Error fetching Project:", error);
@@ -80,10 +76,7 @@ export const getProject = async (req, res) => {
         const { id } = req.params; 
   
         const Project = await ProjectModel.findById(id); 
-    
-        if (!Project) {
-          return res.status(404).json({ status: "error", message: "Project not found" });
-        }
+  
     
         res.status(200).json({ status: "success", data: Project });
       } catch (error) {
@@ -132,7 +125,7 @@ export const getProject = async (req, res) => {
         if (!deletedProject) {
           return res.status(404).json({ status: "error", message: "Project not found"   });
         }
-        
+
         res.status(200).json({ status: "success", message: "Project deleted successfully" });
       } catch (error) {
         console.error("Error deleting Project:", error);

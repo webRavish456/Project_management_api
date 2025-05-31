@@ -58,10 +58,6 @@ export const postLeads = async (req, res) => {
     try {
       const leads = await LeadsModel.find();
   
-      if (leads.length === 0) {
-        return res.status(404).json({ status: "error", message: "leads not found" });
-      }
-  
       res.status(200).json({ status: "success", data: leads });
     } catch (error) {
       console.error("Error fetching leads:", error);
@@ -75,10 +71,6 @@ export const postLeads = async (req, res) => {
       const { id } = req.params; 
 
       const leads = await LeadsModel.findById(id); 
-  
-      if (!leads) {
-        return res.status(404).json({ status: "error", message: "leads not found" });
-      }
   
       res.status(200).json({ status: "success", data: leads });
     } catch (error) {
@@ -128,7 +120,7 @@ export const postLeads = async (req, res) => {
       if (!deletedLeads) {
         return res.status(404).json({ status: "error", message: "Leads not found" });
       }
-      
+
       res.status(200).json({ status: "success", message: "Leads deleted successfully" });
     } catch (error) {
       console.error("Error deleting Leads:", error);

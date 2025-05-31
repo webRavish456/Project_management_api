@@ -57,11 +57,7 @@ export const postClient = async (req, res) => {
   export const getClient = async (req, res) => {
     try {
       const client = await ClientModel.find();
-  
-      if (!client) {
-        return res.status(404).json({ status: "error", message: "Client not found" });
-      }
-  
+
       res.status(200).json({ status: "success", data: client });
     } catch (error) {
       console.error("Error fetching client:", error);
@@ -76,10 +72,6 @@ export const getClientById = async (req, res) => {
       const { id } = req.params; 
 
       const client = await ClientModel.findById(id); 
-  
-      if (! client) {
-        return res.status(404).json({ status: "error", message: "Client not found" });
-      }
   
       res.status(200).json({ status: "success", data: client });
     } catch (error) {

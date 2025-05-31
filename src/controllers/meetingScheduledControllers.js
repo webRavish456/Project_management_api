@@ -58,10 +58,6 @@ export const postMeetingSchedule = async (req, res) => {
     try {
       const meetingSchedule = await MeetingScheduleModel.find();
   
-      if (meetingSchedule.length === 0) {
-        return res.status(404).json({ status: "error", message: "Meeting not found" });
-      }
-  
       res.status(200).json({ status: "success", data: meetingSchedule });
     } catch (error) {
       console.error("Error fetching Meeting:", error);
@@ -75,10 +71,6 @@ export const postMeetingSchedule = async (req, res) => {
       const { id } = req.params; 
 
       const meetingSchedule= await MeetingScheduleModel.findById(id); 
-  
-      if (!meetingSchedule) {
-        return res.status(404).json({ status: "error", message: "meeting schedule not found" });
-      }
   
       res.status(200).json({ status: "success", data: meetingSchedule});
     } catch (error) {
