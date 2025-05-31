@@ -21,7 +21,7 @@ const meetingScheduleSchema = new mongoose.Schema(
         },
 
         meetingDate: { 
-          type: String, 
+          type: Date, 
           
         },
 
